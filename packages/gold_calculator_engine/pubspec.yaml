@@ -1,0 +1,13 @@
+name: gold_calculator_engine
+publish_to: 'none'
+description: Offline-first calculation engine for an Iranian gold-shop calculator.
+version: 1.0.0
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  meta: ^1.12.0
+
+dev_dependencies:
+  test: ^1.25.8
