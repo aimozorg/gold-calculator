@@ -4,8 +4,8 @@ class Rational implements Comparable<Rational> {
   final BigInt numerator;
   final BigInt denominator;
 
-  static const Rational zero = Rational._(BigInt.zero, BigInt.one);
-  static const Rational one = Rational._(BigInt.one, BigInt.one);
+  static final Rational zero = Rational._(BigInt.zero, BigInt.one);
+  static final Rational one = Rational._(BigInt.one, BigInt.one);
 
   const Rational._(this.numerator, this.denominator);
 
@@ -53,8 +53,10 @@ class Rational implements Comparable<Rational> {
       );
 
   Rational operator /(Rational other) {
-    if (other.numerator == BigInt.zero) throw ArgumentError('Division by zero.');
-    return Rational(numerator * other.denominator, denominator * other.numerator);
+    if (other.numerator == BigInt.zero)
+      throw ArgumentError('Division by zero.');
+    return Rational(
+        numerator * other.denominator, denominator * other.numerator);
   }
 
   Rational operator -() => Rational(-numerator, denominator);
@@ -129,7 +131,9 @@ class Rational implements Comparable<Rational> {
 
   @override
   bool operator ==(Object other) =>
-      other is Rational && numerator == other.numerator && denominator == other.denominator;
+      other is Rational &&
+      numerator == other.numerator &&
+      denominator == other.denominator;
 
   @override
   int get hashCode => Object.hash(numerator, denominator);

@@ -1,6 +1,7 @@
 import 'rational.dart';
 
 enum TaxBaseRule { laborPlusProfitPlusCommission }
+
 enum DiscountTaxTreatment { afterTax, reduceTaxableBase }
 
 enum DiscountScope { total, labor, profit, commission }
@@ -39,7 +40,9 @@ class EngineRules {
     required this.taxRuleSet,
     Rational? defaultSellerProfitRate,
     this.defaultMoneyRoundingUnit = 1,
-  }) : defaultSellerProfitRate = defaultSellerProfitRate ?? (Rational.parse('7') / Rational.fromInt(100));
+  }) : defaultSellerProfitRate = defaultSellerProfitRate ??
+            (Rational.parse('7') / Rational.fromInt(100));
 
-  factory EngineRules.mvp1405() => EngineRules(taxRuleSet: TaxRuleSet.iran1405());
+  factory EngineRules.mvp1405() =>
+      EngineRules(taxRuleSet: TaxRuleSet.iran1405());
 }

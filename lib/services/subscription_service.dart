@@ -5,7 +5,8 @@ class SubscriptionState {
   final String plan;
   final DateTime? expiresAt;
 
-  const SubscriptionState({required this.active, this.plan = 'بدون اشتراک', this.expiresAt});
+  const SubscriptionState(
+      {required this.active, this.plan = 'بدون اشتراک', this.expiresAt});
 }
 
 class SubscriptionService {
@@ -27,7 +28,8 @@ class SubscriptionService {
     final status = row['status'] as String? ?? 'inactive';
     final expiresRaw = row['expires_at'] as String?;
     final expires = expiresRaw == null ? null : DateTime.tryParse(expiresRaw);
-    final valid = status == 'active' && (expires == null || expires.isAfter(DateTime.now().toUtc()));
+    final valid = status == 'active' &&
+        (expires == null || expires.isAfter(DateTime.now().toUtc()));
     return SubscriptionState(
       active: valid,
       plan: row['plan'] as String? ?? 'اشتراک',
