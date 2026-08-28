@@ -2,18 +2,25 @@ import 'rational.dart';
 import 'rules.dart';
 
 enum PriceBasis { per18k, per24k, perGivenPurity, perMesghal17k }
+
 enum LaborMode { percent, perGram, fixed, percentPlusPerGram, percentPlusFixed }
+
 enum ProfitMode { percentOfGoldPlusLabor, percentOfGold, fixed }
+
 enum DiscountMode { fixed, percent }
+
 enum Scenario { sale, buy, exchange, melted, conversion }
+
 enum DeductionMode { fixed, percent }
+
 enum FeeMode { fixed, perGram, percent }
 
 class RateInput {
   final Rational value;
   final PriceBasis basis;
   final DateTime timestamp;
-  const RateInput({required this.value, required this.basis, required this.timestamp});
+  const RateInput(
+      {required this.value, required this.basis, required this.timestamp});
 }
 
 class LaborInput {
@@ -21,34 +28,37 @@ class LaborInput {
   final Rational rate;
   final Rational perGram;
   final Rational fixed;
-  const LaborInput({
+  LaborInput({
     this.mode = LaborMode.percent,
-    this.rate = Rational.zero,
-    this.perGram = Rational.zero,
-    this.fixed = Rational.zero,
-  });
+    Rational? rate,
+    Rational? perGram,
+    Rational? fixed,
+  })  : rate = rate ?? Rational.zero,
+        perGram = perGram ?? Rational.zero,
+        fixed = fixed ?? Rational.zero;
 }
 
 class ProfitInput {
   final ProfitMode mode;
   final Rational rate;
   final Rational fixed;
-  const ProfitInput({
+  ProfitInput({
     this.mode = ProfitMode.percentOfGoldPlusLabor,
-    this.rate = Rational.zero,
-    this.fixed = Rational.zero,
-  });
+    Rational? rate,
+    Rational? fixed,
+  })  : rate = rate ?? Rational.zero,
+        fixed = fixed ?? Rational.zero;
 }
 
 class DiscountInput {
   final DiscountMode mode;
   final Rational value;
   final DiscountScope scope;
-  const DiscountInput({
+  DiscountInput({
     this.mode = DiscountMode.fixed,
-    this.value = Rational.zero,
+    Rational? value,
     this.scope = DiscountScope.total,
-  });
+  }) : value = value ?? Rational.zero;
 }
 
 class SaleInput {
@@ -65,20 +75,22 @@ class SaleInput {
   final int roundingUnit;
   final DateTime timestamp;
 
-  const SaleInput({
+  SaleInput({
     required this.grossWeight,
     required this.purity,
     required this.rate,
-    this.stoneWeight = Rational.zero,
+    Rational? stoneWeight,
     required this.labor,
     required this.profit,
-    this.commission = Rational.zero,
+    Rational? commission,
     required this.taxRules,
-    this.discount = const DiscountInput(),
+    DiscountInput? discount,
     this.roundingMode = RoundingMode.halfUp,
     this.roundingUnit = 1,
     required this.timestamp,
-  });
+  })  : stoneWeight = stoneWeight ?? Rational.zero,
+        commission = commission ?? Rational.zero,
+        discount = discount ?? DiscountInput();
 }
 
 class BuyInput {
@@ -92,17 +104,18 @@ class BuyInput {
   final Rational fee;
   final DateTime timestamp;
 
-  const BuyInput({
+  BuyInput({
     required this.weight,
     required this.purity,
     required this.rate,
     required this.buyFactor,
     this.deductionMode = DeductionMode.fixed,
-    this.deduction = Rational.zero,
+    Rational? deduction,
     this.feeMode = FeeMode.fixed,
-    this.fee = Rational.zero,
+    Rational? fee,
     required this.timestamp,
-  });
+  })  : deduction = deduction ?? Rational.zero,
+        fee = fee ?? Rational.zero;
 }
 
 class ExchangeInput {
@@ -121,16 +134,17 @@ class MeltedInput {
   final bool lossEnabled;
   final DateTime timestamp;
 
-  const MeltedInput({
+  MeltedInput({
     required this.weight,
     required this.purity,
     required this.rate,
     this.feeMode = FeeMode.fixed,
-    this.fee = Rational.zero,
-    this.lossPercent = Rational.zero,
+    Rational? fee,
+    Rational? lossPercent,
     this.lossEnabled = false,
     required this.timestamp,
-  });
+  })  : fee = fee ?? Rational.zero,
+        lossPercent = lossPercent ?? Rational.zero;
 }
 
 class CalculationResult {
